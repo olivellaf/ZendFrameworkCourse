@@ -23,23 +23,21 @@ class TestController extends AbstractActionController
                 
         /***************************************************************/
         // If there no parameters. Set a redirection to Home
-        /* if($var1 == "DEFAULT1") {
-           return $this->redirect()->toUrl(
-                   /**
-                    * Two ways for do the same
-                    *   $this->redirect()->toRoute("home")
-                    *   $this->getRequest()->getBaseUrl("www.google.com")
-                    */
-                  // $this->getRequest()->getBaseUrl()
-                  // ); 
+         // if ($var1 == "DEFAULT1") {
+             //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl());
+             /**
+              * Two ways for do the same
+              *   $this->redirect()->toRoute("home")
+              *   $this->getRequest()->getBaseUrl("www.google.com")
+              */
+         // }
         /***************************************************************/
-        
-        
+
         // Defining the Test Layout on the controller
         $this->layout("layout/test");
         
-        $this->layout()->param="Hi! How are you?";
-        $this->layout()->title="Layouts with Zend Framework 2";
+        $this->layout()->param = strtoupper("This text comes from the Controller (TestController.php)");
+        $this->layout()->title = "Layouts with Zend Framework 2";
         
         return new ViewModel(array(
             "text" => "Hola Mundo! Soy Ferran y esto aprendiendo Zend Framework 2",
@@ -56,5 +54,4 @@ class TestController extends AbstractActionController
         
         return $view;
     }
-    
 }

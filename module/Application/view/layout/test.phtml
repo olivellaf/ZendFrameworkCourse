@@ -32,7 +32,6 @@
         
     </head>
     <body>
-        <h1><?php echo $this->param; ?></h1>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -51,6 +50,7 @@
             </div>
         </nav>
         <div class="container">
+            <h1><?php echo $this->param; ?></h1> <!-- gets the param from the TestController.php -->
             <?php echo $this->content; ?>
             <hr>
             <footer>

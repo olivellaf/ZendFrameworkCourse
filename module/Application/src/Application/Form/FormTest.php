@@ -14,7 +14,7 @@ use Zend\Form\Element;
 use Zend\Captcha;
 use Zend\Form\Factory;
 use Zend\Form\Form;
-use Zend\Validator\EmailAddress;
+use Application\Form\FormTestValidator;
 
 
 class FormTest extends Form{
@@ -23,6 +23,10 @@ class FormTest extends Form{
     public function __construct($name = null) {
 
         parent::__construct($name);
+
+        // Using our own and created Form Test Validator class
+        // Associating the validation to the form
+        $this->setInputFilter(new FormTestValidator());
 
         $this->add(array(
             'name' => 'name',

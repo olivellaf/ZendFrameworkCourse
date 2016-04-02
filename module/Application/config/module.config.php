@@ -81,7 +81,7 @@ return array(
             'get-form'  => array(
                 "type" => "segment",
                 'options' => array(
-                    'route'    => '/get-form',
+                    'route'    => '', // now without redirection: '/get-form'
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Index',

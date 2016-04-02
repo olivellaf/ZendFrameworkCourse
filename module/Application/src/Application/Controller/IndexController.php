@@ -34,10 +34,36 @@ class IndexController extends AbstractActionController
 
         $form = new FormTest("form");
 
-        return new ViewModel(array(
+        $view = array(
             'title' => 'Forms in Zend Framework 2',
             'form' => $form,
-        ));
+        );
+
+        if ($this->request->isPost()) {
+
+            // Get the data post and fill the form
+            $form->setData($this->request->getPost());
+
+            // If the form is not valid, add the errors to the view
+            if (!$form->isValid()) {
+
+                $errors = $form->getMessages();
+
+                $view['errors'] = $errors;
+
+                // Extra content. Manipulating the errors array, for only shows the first that we have stablished.
+                    // Something like this.  $view['errors'] = $errors['email']['emailAddressInvalidHostname'];
+
+            }
+
+        } else {
+
+
+
+        }
+
+
+        return new ViewModel($view);
     }
 
     public function getFormDataAction() {
@@ -82,7 +108,7 @@ class IndexController extends AbstractActionController
 
         }
         // Redirecting to the same Form Page but showing the data obtained.
-        $this->redirect()->toUrl($this->getRequest()->getBaseUrl(). "/application/index/form");
+        //$this->redirect()->toUrl($this->getRequest()->getBaseUrl(). "/application/index/form");
 
     }
 }

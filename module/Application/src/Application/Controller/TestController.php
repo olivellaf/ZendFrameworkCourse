@@ -20,27 +20,14 @@ class TestController extends AbstractActionController
         
         $var1 = $this->params()->fromRoute("var1", "DEFAULT1");
         $var2 = $this->params()->fromRoute("var2", "DEFAULT2");
-                
-        /***************************************************************/
-        // If there no parameters. Set a redirection to Home
-         // if ($var1 == "DEFAULT1") {
-             //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl());
-             /**
-              * Two ways for do the same
-              *   $this->redirect()->toRoute("home")
-              *   $this->getRequest()->getBaseUrl("www.google.com")
-              */
-         // }
-        /***************************************************************/
 
-        // Defining the Test Layout on the controller
         $this->layout("layout/test");
-        
-        $this->layout()->param = strtoupper("This text comes from the Controller (TestController.php)");
-        $this->layout()->title = "Layouts with Zend Framework 2";
+
+        $this->layout()->param="Hello how are you?";
+        $this->layout()->title="Templates in Zend Framework 2";
         
         return new ViewModel(array(
-            "text" => "Hola Mundo! Soy Ferran y esto aprendiendo Zend Framework 2",
+            "text" => "Hello World! I'm Ferran and I'm learning to use Zend Framework 2",
             "var1" => $var1,
             "var2" => $var2
         ));

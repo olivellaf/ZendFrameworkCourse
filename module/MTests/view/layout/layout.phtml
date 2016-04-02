@@ -1,9 +1,9 @@
 <?php echo $this->doctype(); ?>
 
-<html lang="es">
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle($this->title)->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -24,12 +24,6 @@
             ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
-        <!-- Our Test Style -->
-        <style>
-            .navbar-inverse { background: red !important; }
-            
-        </style>
-        
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -50,7 +44,6 @@
             </div>
         </nav>
         <div class="container">
-            <h1><?php echo $this->param; ?></h1> <!-- gets the param from the TestController.php -->
             <?php echo $this->content; ?>
             <hr>
             <footer>

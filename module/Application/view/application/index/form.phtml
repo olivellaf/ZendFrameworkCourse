@@ -1,0 +1,30 @@
+
+<h1><?php echo $this->title; ?></h1>
+
+<?php
+
+    // Fasteest than form-old.phtml
+
+    $form = $this->form;
+
+    $form->prepare();
+
+    $form->setAttributes(array(
+        'action' => $this->basePath(). "/get-form",
+        'method' => 'post',
+        'class' => 'form-inline',
+        'role' => 'form',
+    ));
+
+    $formLabel = $this->plugin("formLabel");
+
+    echo $this->form()->openTag($form);
+
+    // Print all form
+    echo "<div class='form-group'>";
+    echo $this->formCollection($form);
+    echo "</div>";
+
+    echo $this->form()->closeTag();
+
+    ?>

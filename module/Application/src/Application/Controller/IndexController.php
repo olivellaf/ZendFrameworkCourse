@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Application\Form\FormTest;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -22,5 +23,33 @@ class IndexController extends AbstractActionController
     public function helloWorldAction() {
         echo "Hola Mundo! Soy Ferran y esto aprendiendo Zend Framework 2";
         die();
+    }
+
+    public function formAction() {
+
+        $form = new FormTest("form");
+
+        return new ViewModel(array(
+            'title' => 'Forms in Zend Framework 2',
+            'form' => $form,
+        ));
+    }
+
+    public function getFormDataAction() {
+
+        if ($this->request->getPost('submit')) {
+
+            $data = $this->request->getPost();
+
+            var_dump($data);
+            die();
+
+        } else {
+
+
+        }
+        // Redirecting to the same Form Page but showing the data obtained.
+        $this->redirect()->toUrl($this->getRequest()->getBaseUrl(). "/application/index/form");
+
     }
 }

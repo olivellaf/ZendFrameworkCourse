@@ -13,6 +13,11 @@ use Application\Form\FormTest;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+use Zend\Validator;
+use Zend\I18n\Validator as I18Validator;
+
+
+
 class IndexController extends AbstractActionController
 {
     public function indexAction()
@@ -40,6 +45,34 @@ class IndexController extends AbstractActionController
         if ($this->request->getPost('submit')) {
 
             $data = $this->request->getPost();
+
+            $email = new Validator\EmailAddress();
+
+            // Set error message
+            $email->setMessage("Email field '%value%' is not correct");
+
+            $validate_email = $email->isValid($this->request->getPost('email'));
+
+            // Validation: Only characters
+            $alpha = new I18Validator\Alpha();
+            $alpha->setMessage("The name %value% introduced isn't only characters");
+            $validate_alpha = $alpha->isValid($this->request->getPost('name'));
+
+
+            if ($validate_email && $validate_alpha) {
+
+                $validate = "Data validation correct";
+
+            } else {
+
+                // If there are some error. Get the errors and show it.
+                $validate = array(
+                    $email->getMessages(),
+                    $alpha->getMessages(),
+                );
+
+                var_dump($validate);
+            }
 
             var_dump($data);
             die();

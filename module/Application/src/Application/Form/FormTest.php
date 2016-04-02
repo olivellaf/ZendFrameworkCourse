@@ -57,6 +57,28 @@ class FormTest extends Form{
 
         $this->add($email);
 
+
+        // Adding a SELECT field into the form
+        // In this case, we don't declare the array first as the other cases, insert it straight to the method add.
+        $this->add(array(
+            'type' => 'Select',
+            'name' => 'active',
+            'options' => array(
+                'label' => 'Active: ',
+                'value_options' => array(
+                    'yes' => 'Yes',
+                    'no' => 'No',
+                ),
+            ),
+            'attributes' => array(
+                'value' => 'si', // checked by default
+                'required' => 'required',
+                'class' => 'form-control',
+            )
+        ));
+
+
+
         // Submit
         $this->add(array(
             'name' => 'submit',

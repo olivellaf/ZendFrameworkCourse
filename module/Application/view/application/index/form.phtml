@@ -23,9 +23,22 @@
 
     // Print all form
     echo "<div class='form-group'>";
-    echo $this->formCollection($form);
+/**
+ *  If we have printed one by one the elements of the forms, we should have to also include
+ * the "select" input.
+ *
+ * <div class="form_element">
+        <?php
+        $activo=$form->get('activo');
+        echo "Activo:".$this->formSelect($activo);
+        ?>
+    </div>
+ */
+
+        // This is the best and fastest way to print the all form! But has to be well set it on the class.
+        echo $this->formCollection($form);
     echo "</div>";
 
-    echo $this->form()->closeTag();
+    echo $this->form()->closeTag(); // Don't forget to close the form!
 
     ?>

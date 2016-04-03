@@ -16,6 +16,8 @@ use Zend\View\Model\ViewModel;
 use Zend\Validator;
 use Zend\I18n\Validator as I18Validator;
 
+use Zend\Db\Adapter\Adapter;
+
 
 
 class IndexController extends AbstractActionController
@@ -32,7 +34,13 @@ class IndexController extends AbstractActionController
 
     public function formAction() {
 
-        $form = new FormTest("form");
+        // Get the dbAdapter to connect to the Database
+        $dbAdapter = $this->getServiceLocator()->get('Zend\\Db\\Adapter\\Adapter');
+
+        // Create the form object and pass to the adaptor
+        $form = new FormTest($dbAdapter, 'form');
+
+        // $form = new FormTest("form");
 
         $view = array(
             'title' => 'Forms in Zend Framework 2',
@@ -56,12 +64,7 @@ class IndexController extends AbstractActionController
 
             }
 
-        } else {
-
-
-
         }
-
 
         return new ViewModel($view);
     }

@@ -1,0 +1,74 @@
+
+<h1><?php echo $this->title; ?></h1>
+
+<?php
+
+    // Fasteest than form-old.phtml
+
+    $form = $this->form;
+
+    $form->prepare();
+
+    $form->setAttributes(array(
+        //'action' => $this->basePath(). "/get-form",
+        'action' => '',
+        'method' => 'post',
+        'class' => 'form-inline',
+        'role' => 'form',
+    ));
+
+    $formLabel = $this->plugin("formLabel");
+
+    echo $this->form()->openTag($form);
+
+    // Printing one by one element of the form
+    echo "<div class='form-group'>";
+
+    // For print all in one form is like
+    // echo $this->formCollection($form);
+?>
+
+    <div class="form_element name">
+        <?php
+        $name = $form->get('name');
+        echo $formLabel->openTag(). $name->getOption("label"). " ";
+        echo $this->formInput($name);
+        echo $formLabel->closeTag();
+        ?>
+    </div>
+
+
+    <div class="form_element email">
+        <?php
+        $email = $form->get('email');
+        echo $formLabel->openTag(). $email->getOption("label"). " ";
+        echo $this->formInput($email);
+        echo $formLabel->closeTag();
+        ?>
+    </div>
+
+    <div class="form_element">
+            <?php
+            $active = $form->get('active');
+            echo "Active:".$this->formSelect($active);
+            ?>
+    </div>
+
+    <div class="form_element status">
+        <?php
+        $status = $form->get('status');
+        echo "".$this->formRadio($status);
+        ?>
+    </div>
+
+<?php
+    echo "<label for='document'>".$this->formElement($form->get('document'))."Document<label>";
+    echo "</div>";
+
+    echo "<div class='form_element submit'>";
+    echo $this->formElement($form->get('submit')); // printing the submit button
+    echo "</div>";
+
+    echo $this->form()->closeTag(); // Don't forget to close the form!
+
+?>

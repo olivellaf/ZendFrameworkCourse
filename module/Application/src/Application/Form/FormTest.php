@@ -19,10 +19,15 @@ use Application\Form\FormTestValidator;
 
 class FormTest extends Form{
 
+    protected $adapter;
 
-    public function __construct($name = null) {
+    public function __construct($dbAdapter = null, $name = null) {
 
         parent::__construct($name);
+
+        // Assigning the adapter to the $adapter attribute of the class
+        $this->adapter = $dbAdapter;
+
 
         // Using our own and created Form Test Validator class
         // Associating the validation to the form
@@ -61,20 +66,48 @@ class FormTest extends Form{
         // Adding a SELECT field into the form
         // In this case, we don't declare the array first as the other cases, insert it straight to the method add.
         $this->add(array(
-            'type' => 'Select',
-            'name' => 'active',
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'category',
             'options' => array(
-                'label' => 'Active: ',
-                'value_options' => array(
-                    'yes' => 'Yes',
-                    'no' => 'No',
-                ),
+                'label' => 'Category: ',
+                'empty_option' => 'Select a category',
+                'value_options' => $this->getCategories(), // getting categories from the DB
+
             ),
+
             'attributes' => array(
                 'value' => 'si', // checked by default
                 'required' => 'required',
                 'class' => 'form-control',
             )
+        ));
+
+        // Adding a Checkbox and Radio field into the form
+        // In this case, we don't declare the array first as the other cases, insert it straight to the method add.
+        $this->add(array(
+            'type' => 'radio',
+            'name' => 'status',
+            'options' => array(
+                'value_options' => array(
+                    'public' => ' Public ',
+                    'followers' => ' Only followers ',
+                ),
+            ),
+            'attributes' => array(
+                'value' => 'public', // checked by default
+                'required' => 'required',
+            )
+        ));
+
+        // Checkbox
+        $this->add(array(
+            'type' => 'checkbox',
+            'name' => 'document',
+            'options' => array(
+                'label' => ' Document ',
+                'use_hidden_element' => false,
+                'checked_value' => 'si',
+            ),
         ));
 
 
@@ -88,5 +121,25 @@ class FormTest extends Form{
                 'title' => 'Send',
             ),
         ));
+    }
+
+    /**
+     * Function for get all data from the db.
+     */
+    public function getCategories() {
+
+        // Make a standard query with Query Builder
+        $dbAdapter = $this->adapter;
+        $statement = $dbAdapter->query("SELECT id, name FROM categories");
+        $result = $statement->execute();
+
+        $select = array();
+
+        foreach ($result as $r) {
+
+            $select[$r['id']] = $r['name'];
+        }
+
+        return $select;
     }
 }

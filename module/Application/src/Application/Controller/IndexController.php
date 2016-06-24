@@ -17,11 +17,28 @@ use Zend\Validator;
 use Zend\I18n\Validator as I18Validator;
 
 use Zend\Db\Adapter\Adapter;
-
+use Application\Controller\Plugin\Plugins;
 
 
 class IndexController extends AbstractActionController
 {
+
+    protected $userTable;
+
+
+    /**
+     * Added after modify module.php, for adding new "factories".
+     */
+    protected function getUserTable() {
+        if (!$this->userTable) {
+            $sm = $this->getServiceLocator();
+            $this->userTable = $sm->get('Application\Model\UserTable');
+        }
+
+        return $this->userTable;
+    }
+
+
     public function indexAction()
     {
         return new ViewModel();
@@ -113,5 +130,54 @@ class IndexController extends AbstractActionController
         // Redirecting to the same Form Page but showing the data obtained.
         //$this->redirect()->toUrl($this->getRequest()->getBaseUrl(). "/application/index/form");
 
+    }
+
+    public function listAction() {
+
+        /* Testing our own plugins and pieces of code */
+        $plugins = $this->Plugins();
+        echo $plugins->today();
+
+        $var = "Value";
+        var_dump($plugins->exists($var));
+        /* end testing plugins */
+
+
+        // $users = $this->getUserTable()->fetchAll();
+
+        $users = $this->getUserTable()->fetchAllSql(); // using the literal sql string method
+
+        foreach ($users as $user) {
+            var_dump($user);
+        }
+
+        die();
+    }
+
+    public function addAction() {
+        $user = new \Application\Model\User();
+
+        $data = array(
+            "name" => "Bruce",
+            "surname" => "Wayne",
+            "description" => "I'am Batman.",
+            "email" => "batman2@gmail.com",
+            "password" => "batman",
+            "image" => "batimage1",
+            "alternative" => "batalternative1",
+        );
+
+        $user->exchangeArray($data); /* transforms the array to the User Type */
+
+        $userExists = $users = $this->getUserTable()->getUserByEmail($data['email']);
+
+        if ($userExists) {
+            $this->redirect()->toUrl($this->getRequest()->getBaseUrl(). "/application/index/list");
+
+        } else {
+
+            $save = $this->getUserTable()->saveUser($user);
+            $this->redirect()->toUrl($this->getRequest()->getBaseUrl(). "/application/index/list");
+        }
     }
 }

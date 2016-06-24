@@ -116,6 +116,13 @@ return array(
             'Application\Controller\Test' => Controller\TestController::class
         ),
     ),
+
+    'controller_plugins' => array(
+        'invokables' => array(
+            'Plugins' => 'Application\Controller\Plugin\Plugins',
+        ),
+    ),
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -132,6 +139,14 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+
+    /* Recomend to check the documentation for learn more about the helpers */
+    'view_helpers' => array(
+        'invokables' => array (
+            'lowercase' => 'Application\View\Helper\LowerCase',
+        ),
+    ),
+
     // Placeholder for console routes
     'console' => array(
         'router' => array(
